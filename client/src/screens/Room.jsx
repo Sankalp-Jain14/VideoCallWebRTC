@@ -23,17 +23,20 @@ const RoomPage = ()=>{
         setMyStream(stream); //we got our stram and we will render this in our local machine
     },[remoteSocketId,socket]);
 
+    const handleIncommingCall = useCallback(({from,offer})=>{console.log(`Incomming call`,from,offer);},[]);
     useEffect(()=>{
         socket.on('user:joined',handleUserJoined);
+        socket.on('incomming:call',handleIncommingCall);
         return ()=>{
             socket.off('user:joined',handleUserJoined);
+            socket.off('user:joined',handleIncommingCall);
         }
-    },[socket,handleUserJoined]);
+    },[socket,handleUserJoined,handleIncommingCall]);
     return(
         <div>
             <h1>Room Page</h1>
             <h4>{remoteSocketId ? 'Connected':'No one in the room'}</h4>
-            {remoteSocketId && <buton onClick={handleCallUser}>CALL</buton>}
+            {remoteSocketId && <button onClick={handleCallUser}>CALL</button>}
             {
                 myStream && <><h1>My Stream</h1><ReactPlayer playing muted height = "100px" width="200px" url={myStream}  /></>
             }

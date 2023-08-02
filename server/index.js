@@ -17,4 +17,8 @@ io.on("connection", (socket) =>{
         socket.join(room);
         io.to(socket.id).emit("room:join",data);//jis user ne data send kiya usi ko emit karo room join. yeh room join wapis Lobby ke useEffect me jayega aur console.log aana chaiye 
     }); 
+
+    socket.on('user:call',({to,offer})=>{
+        io.to(to).emit('incomming:call', {from : socket.id,offer});
+    });
 });
