@@ -1,5 +1,6 @@
 import React,{useEffect,useCallback,useState} from 'react';
 import ReactPlayer from 'react-player'
+import peer from "../services/peer";
 import {useSocket } from "../context/SocketProvider";
 
 const RoomPage = ()=>{
@@ -17,8 +18,10 @@ const RoomPage = ()=>{
             audio:true,
             video:true,
         }); 
-        setMyStream(stream) //we got our stram and we will render this in our local machine
-    },[]);
+        const offer = await peer.getOffer();//offer created
+        socket.emit("user:call",{to:remoteSocketId , offer});//sending our offer to another user
+        setMyStream(stream); //we got our stram and we will render this in our local machine
+    },[remoteSocketId,socket]);
 
     useEffect(()=>{
         socket.on('user:joined',handleUserJoined);
