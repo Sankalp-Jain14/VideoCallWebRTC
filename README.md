@@ -81,3 +81,4 @@ useSocket is a custom hook created to use Web socket anywhere in the application
 The SocketProvider initializes a webSocket instance using 'io' function from the 'socket.io-client' library and makes it avialable via the 'SocketContext'
 The useMemo hook is used to ensure that the socket is created only once preventing unnecessary re-creations
 
+Now the FrontEnd and backend are connected. The logic to enter in the room is here
